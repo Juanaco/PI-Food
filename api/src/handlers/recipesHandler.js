@@ -1,3 +1,5 @@
+const { createRecipe } = require("../controllers/recipeController")
+
 
 const getRecipesHandler = (req, res) => {
     const {name} = req.query;//el name se saca de la url, ?name=Juan
@@ -15,15 +17,17 @@ const getDetailHandler = (req, res) => {
 };
 
 // se hace una prueba con los valores mandados por body en JSON
-const createRecipeHandler = (req, res) =>{
-    const{name, image, summary, healthScore, analyzedInstructions} = req.body
+const createRecipeHandler = async (req, res) =>{
     // los json se sacan de req.body
-    res.status(200).send(`Creando receta:
-    name: ${name},
-    image: ${image},
-    summary: ${summary},
-    health score: ${healthScore},
-    Step by step Instructions: ${analyzedInstructions}`)
+    
+    try{
+        const{name, image, summary, healthScore, analyzedInstructions} = req.body
+        const newRecipe = await createRecipe(name, image, summary, healthScore, analyzedInstructions);
+        res.status(201).json(newRecipe)
+    }catch(error){
+        
+        res.status(400).json({ error: error.message })
+    }
 };
 
 module.exports ={
