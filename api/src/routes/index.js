@@ -3,10 +3,24 @@ const { Router } = require('express');
 // Ejemplo: const authRouter = require('./auth.js');
 
 
-const router = Router();
+const mainRouter = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
+mainRouter.get('/', (req, res) => {
+    res.status(200).send("OK")
+});
+mainRouter.get('/food', (req, res) => {
+    res.status(200).send("aca esta tu comida ")
+});
+mainRouter.get('/food/:id', (req, res) => {
+    res.status(200).send("una comida por id")
+  });
+  
+mainRouter.post('/food', (req, res) => {
+    res.status(200).send('Una receta creadas')
+})
+  
 
-module.exports = router;
+module.exports = mainRouter;
