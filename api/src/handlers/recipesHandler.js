@@ -1,4 +1,7 @@
-const { createRecipe } = require("../controllers/recipeController")
+const { json } = require("body-parser");
+const { createRecipe, getRecipeDetail } = require("../controllers/recipeController")
+const axios = require("axios");
+const Recipe = require("../models/Recipe");
 
 
 const getRecipesHandler = (req, res) => {
@@ -10,18 +13,32 @@ const getRecipesHandler = (req, res) => {
     }
 };
 
-const getDetailHandler = (req, res) => {
+
+
+const getDetailHandler = async (req, res) => {
+
     const {id} = req.params;
+    // *****filtrar si es de BDD o API
+    const source = isNaN(id) ? "bdd" : "api";
+   
+    try {
+
+        const recipe = await getRecipeDetail(id, source)
+        res.status(200).send(recipe) 
+       
+        
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
     
-    res.status(200).send(`una comida por id, el detalle de la comida nro ${id}`)
 };
 
 // se hace una prueba con los valores mandados por body en JSON
 const createRecipeHandler = async (req, res) =>{
     // los json se sacan de req.body
+    const{name, image, summary, healthScore, analyzedInstructions} = req.body
     
     try{
-        const{name, image, summary, healthScore, analyzedInstructions} = req.body
         const newRecipe = await createRecipe(name, image, summary, healthScore, analyzedInstructions);
         res.status(201).json(newRecipe)
     }catch(error){

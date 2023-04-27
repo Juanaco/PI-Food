@@ -22,10 +22,14 @@ server.use((req, res, next) => {
   next();
 });
 
-server.use((req, res, next) => {
-  console.log("este es el midd")
-  next();
-});
+
+// ¨**********EJEMPLO DE MIDDLEWARE**********
+    // server.use((req, res, next) => {
+    //   console.log("este es el midd")
+    //   next();
+    // });
+
+    
 server.use('/', routes);
 
 

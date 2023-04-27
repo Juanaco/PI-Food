@@ -21,7 +21,7 @@ const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {//conección con sequelize
+conn.sync({ alter: true }).then(() => {//conección con sequelize
   //cambiar "force" por "alter", force reinicia los datos de las tablas
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
