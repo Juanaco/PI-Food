@@ -1,4 +1,6 @@
 const { Router } = require('express');
+const recipesRouter = require("./recipesRouter");
+const dietsRouter = require('./dietsRouter');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -11,16 +13,11 @@ const mainRouter = Router();
 mainRouter.get('/', (req, res) => {
     res.status(200).send("OK")
 });
-mainRouter.get('/food', (req, res) => {
-    res.status(200).send("aca esta tu comida ")
-});
-mainRouter.get('/food/:id', (req, res) => {
-    res.status(200).send("una comida por id")
-  });
-  
-mainRouter.post('/food', (req, res) => {
-    res.status(200).send('Una receta creadas')
-})
+
+mainRouter.use("/recipes", recipesRouter);
+
+mainRouter.use("/diets", dietsRouter);
+
   
 
 module.exports = mainRouter;
