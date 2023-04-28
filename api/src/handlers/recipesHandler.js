@@ -1,16 +1,16 @@
 const { json } = require("body-parser");
-const { createRecipe, getRecipeDetail } = require("../controllers/recipeController")
+const { createRecipe, getRecipeDetail, searchRecipeByName, getAllRecipes } = require("../controllers/recipeController")
 const axios = require("axios");
 const Recipe = require("../models/Recipe");
 
 
-const getRecipesHandler = (req, res) => {
+const getRecipesHandler = async (req, res) => {
     const {name} = req.query;//el name se saca de la url, ?name=Juan
-    if(name){
-        res.send(`Buscar la receta o las recetas con nombre: ${name}`);
-    }else{
-        res.status(200).send("Todas las comidas")
-    }
+    
+    const results = name ? await searchRecipeByName(name) : await getAllRecipes();
+
+    res.status(200).json(results);
+
 };
 
 

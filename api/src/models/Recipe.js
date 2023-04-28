@@ -24,6 +24,11 @@ module.exports = (sequelize) => {
     },
     analyzedInstructions:{
       type: DataTypes.TEXT
+    },
+    created:{
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+
     }
     // name, image, summary, healthScore, analyzedInstructions
   }, {timestamps: false});
